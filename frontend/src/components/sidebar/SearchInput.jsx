@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
 
-const SearchInput = () => {
+const SearchInput = ({ onSearch }) => {
   const [input, setInput] = useState("");
 
   function handleChange(event) {
@@ -11,6 +11,7 @@ const SearchInput = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
+	onSearch(input);
   }
 
   return (
