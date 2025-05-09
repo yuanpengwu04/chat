@@ -10,7 +10,7 @@ const FormInput = ({
   onChange,
 }) => {
   return (
-    <div>
+    <div className="w-full">
       <fieldset className="fieldset">
         <legend className="fieldset-legend">{field}</legend>
         <input

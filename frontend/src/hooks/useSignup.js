@@ -12,6 +12,7 @@ const useSignup = () => {
     password,
     confirmPassword,
     gender,
+    licenseKey,
   }) => {
     const success = handleInputError({
       fullName,
@@ -35,10 +36,12 @@ const useSignup = () => {
           password,
           confirmPassword,
           gender,
+          licenseKey,
         }),
       });
 
       const data = await res.json();
+      console.log(data);
 
       if (data.error) {
         throw new Error(data.error);

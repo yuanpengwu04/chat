@@ -1,10 +1,49 @@
 import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
+import License from "../models/license.model.js";
 import generateTokenAndSetCookies from "../utils/generateToken.js";
 
 export const signup = async (req, res) => {
   try {
-    const { fullName, username, password, confirmPassword, gender } = req.body;
+    const {
+      fullName,
+      username,
+      password,
+      confirmPassword,
+      gender,
+      licenseKey,
+    } = req.body;
+
+    const license = await License.findOne({ key: licenseKey });
+
+    if (!license) {
+      return res.status(400).json({
+        valid: false,
+        error: "Invalid license key",
+      });
+    }
+
+    if (!license.isActive) {
+      return res.status(400).json({
+        valid: false,
+        error: "License is deactivated",
+      });
+    }
+
+    if (license.expiresAt && new Date(license.expiresAt) < new Date()) {
+      return res.status(400).json({
+        valid: false,
+        error: "License has expired",
+      });
+    }
+
+    // Device registration check
+    if (license.used) {
+      return res.status(400).json({
+        valid: false,
+        error: "License is already used",
+      });
+    }
 
     if (password !== confirmPassword) {
       return res.status(400).json({ error: "Passwords do not match." });
@@ -30,8 +69,12 @@ export const signup = async (req, res) => {
     });
 
     if (newUser) {
-      await generateTokenAndSetCookies(newUser._id, res);
+      generateTokenAndSetCookies(newUser._id, res);
       await newUser.save();
+
+      license.used = true;
+      license.userId = newUser._id;
+      await license.save();
 
       res.status(201).json({
         _id: newUser._id,
@@ -40,7 +83,7 @@ export const signup = async (req, res) => {
         profilePic: newUser.profilePic,
       });
     } else {
-      res.status(400).json({ error: "Ivalid user data." });
+      res.status(400).json({ error: "Invalid user data." });
     }
   } catch (error) {
     console.log("Error in signup controller.", error.message);
