@@ -22,12 +22,12 @@ const Message = ({ message }) => {
       </div>
       <div
         className={`chat-bubble ${
-          isSender ? "text-white bg-blue-500" : "text-black"
+          isSender ? "text-white bg-[#8686de]" : "text-black bg-white"
         } ${message.shouldShake && "shake"}`}
       >
         {message.message}
       </div>
-      <div className="chat-footer opacity-50">
+      <div className="chat-footer opacity-50 text-gray-100">
         {extractTime(message.createdAt)}
       </div>
     </div>

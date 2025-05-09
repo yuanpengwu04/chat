@@ -4,11 +4,11 @@ import Conversation from "./Conversation";
 
 const Conversations = ({ searchTerm }) => {
   const { loading, conversations } = useGetConversations();
-  //console.log(conversations)
+
   const filteredConversations = conversations.filter((conversation) =>
     conversation.username.toLowerCase().includes(searchTerm)
   );
-  //console.log(filteredConversations)
+
   return (
     <div className="py-2 flex flex-col overflow-auto">
       {loading ? (
