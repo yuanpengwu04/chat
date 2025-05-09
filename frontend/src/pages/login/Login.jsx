@@ -20,14 +20,19 @@ const Login = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-w-96 mx-auto">
-      <div className="w-full p-6 rounded-lg shadow-md bg-gray-400/0 bg-clip-padding backdrop-filter backdrop-blur-lg">
-        <h1 className="text-3xl font-semibold text-center text-gray-300">
+    <div className="h-screen w-screen flex flex-col">
+      <div className="bg-[#9696ee] text-white flex items-center justify-center py-6">
+        <div className="text-6xl font-bold brand-header">Mirth</div>
+      </div>
+    <div className="flex-1 flex items-center justify-center min-w-96 mx-auto">
+      <div className="flex-1 max-w-md p-6 w-full items-center justify-center rounded-lg shadow-md bg-gray-400/10 bg-clip-padding backdrop-filter backdrop-blur-lg">
+        <h1 className="text-4xl font-semibold text-center text-gray-300 mb-4 brand-header">
           Login
-          <span className="text-blue-500"> ChatApp</span>
         </h1>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="items-center justify-center">
+		
+		  
           <FormInput
             field={`Username`}
             name="username"
@@ -35,7 +40,7 @@ const Login = () => {
             value={inputs.username}
             onChange={handleChange}
           />
-
+          
           <FormInput
             type="password"
             name="password"
@@ -44,16 +49,9 @@ const Login = () => {
             value={inputs.password}
             onChange={handleChange}
           />
-
-          <Link
-            to="/signup"
-            className="text-sm  hover:underline hover:text-blue-600 mt-2 inline-block"
-          >
-            {"Don't"} have an account?
-          </Link>
-
-          <div>
-            <button disabled={loading} className="btn btn-block btn-sm mt-2">
+		  
+		  <div className="flex items-center justify-center">
+            <button disabled={loading} className="btn btn-block btn-sm mt-2 w-1/6 bg-[#7676ce] hover:bg-[#8686de] text-white">
               {loading ? (
                 <span class="loading loading-dots loading-sm"></span>
               ) : (
@@ -61,9 +59,18 @@ const Login = () => {
               )}
             </button>
           </div>
+          <div className="flex items-center justify-center">
+          <Link
+            to="/signup"
+            className="text-sm text-gray-300 text-center justify-center items-center hover:underline hover:text-indigo-300 mt-2 inline-block"
+          >
+            {"Don't"} have an account?
+          </Link>
+          </div>
         </form>
       </div>
     </div>
+	</div>
   );
 };
 export default Login;

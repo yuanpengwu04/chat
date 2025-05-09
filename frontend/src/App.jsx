@@ -2,6 +2,7 @@ import { useState } from "react";
 import Login from "./pages/login/Login";
 import Home from "./pages/home/Home";
 import SignUp from "./pages/signup/SignUp";
+import Settings from "./pages/settings/Settings";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAuthContext } from "./context/AuthContext";
@@ -20,6 +21,10 @@ function App() {
           path="/signup"
           element={authUser ? <Navigate to="/" /> : <SignUp />}
         />
+		<Route 
+		  path="/settings"
+		  element={authUser ? <Settings /> : <Login />} 
+		/>
       </Routes>
       <Toaster />
     </div>

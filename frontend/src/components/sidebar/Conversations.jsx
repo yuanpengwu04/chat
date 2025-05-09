@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import useGetConversations from "../../hooks/useGetConversations";
 import Conversation from "./Conversation";
 
-const Conversations = () => {
+const Conversations = ({ searchTerm }) => {
   const { loading, conversations } = useGetConversations();
 
+  const filteredConversations = conversations.filter((conversation) =>
+    conversation.username.toLowerCase().includes(searchTerm)
+  );
 
   return (
     <div className="py-2 flex flex-col overflow-auto">
@@ -13,12 +16,12 @@ const Conversations = () => {
           <span className="loading loading-dots loading-sm"></span>
         </div>
       ) : (
-        conversations.map((conversation, index) => {
+        filteredConversations.map((conversation, index) => {
           return (
             <Conversation
               key={conversation._id}
               conversation={conversation}
-              bar={conversations.length - 1 !== index}
+              bar={filteredConversations.length - 1 !== index}
             />
           );
         })
