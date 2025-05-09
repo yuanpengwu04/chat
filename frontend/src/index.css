@@ -1,5 +1,9 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@font-face {
+  font-family: "Itim";
+  src: url("./assets/fonts/itim-cyrillic.otf");
+}
 
 body {
   background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
@@ -15,6 +19,10 @@ body {
 
 .shake {
   animation: shake 0.4s ease-in-out;
+}
+
+.brand-header {
+	font-family: 'Itim';
 }
 
 @keyframes shake {

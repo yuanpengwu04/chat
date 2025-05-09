@@ -13,10 +13,12 @@ const LogoutButton = () => {
       {loading ? (
         <span class="loading loading-dots loading-sm"></span>
       ) : (
-        <BiLogOut
-          className="w-6 h-6 text-white cursor-pointer"
+        <button
+          className="btn btn-circle bg-[#7676ce] hover:bg-[#8686de]"
           onClick={handleClick}
-        />
+        >
+          <BiLogOut className="w-6 h-6 text-white" />
+        </button>
       )}
     </div>
   );

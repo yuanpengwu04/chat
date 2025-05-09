@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Conversations from "./Conversations";
-import LogoutButton from "./LogoutButton";
 import SearchInput from "./SearchInput";
 
 const Sidebar = () => {
@@ -10,11 +9,11 @@ const Sidebar = () => {
 	setSearchTerm(input.toLowerCase()); 
 	}
 	return (
-		<div className='border-r border-slate-500 p-4 flex flex-col'>
+		<div className='w-1/4 min-w-[250px] max-w-[300px] border-r border-slate-500 p-4 flex flex-col h-full'>
 			<SearchInput onSearch={handleSearch} />
 			<div className='divider px-3'></div>
 			<Conversations searchTerm={searchTerm} />
-			<LogoutButton />
+			
 		</div>
 	);
 };

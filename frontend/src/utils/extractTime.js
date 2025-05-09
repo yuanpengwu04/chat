@@ -4,7 +4,9 @@ const extractTime = (time) => {
   const date = new Date(time);
   const hours = padZero(date.getHours());
   const minutes = padZero(date.getMinutes());
-  return `${hours}:${minutes}`;
+  const currentDate = new Date().toLocaleDateString();
+  const dateDate = date.toLocaleDateString();
+  return (currentDate === dateDate) ? `Today at ${hours}:${minutes}` : `${dateDate} ${hours}:${minutes}`;
 };
 
 export default extractTime;

@@ -11,7 +11,7 @@ const MessageContainer = () => {
     return () => setSelectedConversation(null);
   }, []);
   return (
-    <div className="md:min-w-[450px] flex flex-col">
+    <div className="flex-1 md:min-w-[450px] flex flex-col">
       {selectedConversation ? (
         <>
           {/* Header */}
