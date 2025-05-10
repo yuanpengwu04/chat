@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
 
-const useSignup = () => {
-  const [loading, setLoading] = useState(false);
+const useUpdateAccount = () => {
+  const [loading, setLoading] = useState();
   const { setAuthUser } = useAuthContext();
 
-  const signup = async ({
-    fullName,
+  const updateAccount = async ({
     username,
+    fullName,
     password,
     confirmPassword,
     gender,
-    licenseKey,
   }) => {
     const success = handleInputError({
       fullName,
@@ -25,7 +24,7 @@ const useSignup = () => {
 
     setLoading(true);
     try {
-      const res = await fetch(`/api/auth/signup`, {
+      const res = await fetch(`/api/users/update`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +35,6 @@ const useSignup = () => {
           password,
           confirmPassword,
           gender,
-          licenseKey,
         }),
       });
 
@@ -55,11 +53,10 @@ const useSignup = () => {
       setLoading(false);
     }
   };
-
-  return { loading, signup };
+  return { loading, updateAccount };
 };
 
-export default useSignup;
+export default useUpdateAccount;
 
 const handleInputError = ({
   fullName,
@@ -68,8 +65,8 @@ const handleInputError = ({
   confirmPassword,
   gender,
 }) => {
-  if (!fullName || !username || !password || !confirmPassword || !gender) {
-    toast.error("Please fill in all fields");
+  if (fullName && username && password && confirmPassword && gender) {
+    toast.error("No fields are filled");
     return false;
   }
 
@@ -78,7 +75,7 @@ const handleInputError = ({
     return false;
   }
 
-  if (password.length < 6) {
+  if (password && password.length < 6) {
     toast.error("Password must be at least 6 characters");
     return false;
   }
