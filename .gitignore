@@ -26,3 +26,7 @@ dist-ssr
 *.sw?
 
 *.zip
+.env.example
+frontend/vite.config.js
+frontend/vite.config.js
+frontend/vite.config.js
