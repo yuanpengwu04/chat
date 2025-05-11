@@ -7,6 +7,7 @@ import licenseRoutes from "./routes/license.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import messageRoutes from "./routes/message.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import conversationRoutes from "./routes/conversation.routes.js";
 
 import connectToMongoDB from "./db/connectToMongoDB.js";
 
@@ -24,6 +25,7 @@ app.use("/api/license", licenseRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/conversations", conversationRoutes);
 
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
