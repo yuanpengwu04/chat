@@ -11,7 +11,7 @@ const SearchInput = ({ onSearch }) => {
 
   function handleSubmit(event) {
     event.preventDefault();
-	onSearch(input);
+    onSearch(input);
   }
 
   return (

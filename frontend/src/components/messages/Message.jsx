@@ -24,7 +24,7 @@ const Message = ({ message }) => {
         className={`chat-bubble ${
           isSender ? "text-white bg-[#8686de]" : "text-black bg-white"
         } ${message.shouldShake && "shake"}`}
-		style={{
+        style={{
           wordWrap: "break-word",
           overflowWrap: "break-word",
           wordBreak: "break-word",
