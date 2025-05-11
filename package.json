@@ -1,10 +1,12 @@
 {
-  "name": "4.-real-time-chat-app-without-image-uploads",
+  "name": "chat",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon backend/server.js"
+    "server": "nodemon backend/server.js",
+    "start": "node backend/server.js",
+    "build": "npm install && npm install --prefix frontend --include=dev && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",
