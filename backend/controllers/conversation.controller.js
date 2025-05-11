@@ -10,29 +10,46 @@ export const getConversationsByUserId = async (req, res) => {
       participants: userId,
     }).populate({
       path: "participants",
-      select: "-password", // Exclude password from the response
+      select: "username fullName profilePic", // Explicitly select the fields we need
     });
 
     // Transform the conversations to include user details
-    const transformedConversations = conversations.map((conversation) => {
-      // Get the other participant (not the current user)
-      const otherParticipant = conversation.participants.find(
-        (participant) => participant._id.toString() !== userId
-      );
+    const transformedConversations = conversations
+      .map((conversation) => {
+        // Get the other participant (not the current user)
+        const otherParticipant = conversation.participants.find(
+          (participant) => participant._id.toString() !== userId
+        );
 
-      return {
-        _id: conversation._id,
-        participants: conversation.participants,
-        lastMessage:
-          conversation.messages[conversation.messages.length - 1] || null,
-        createdAt: conversation.createdAt,
-        updatedAt: conversation.updatedAt,
-        // Include the other participant's details for easy access
-        username: otherParticipant.username,
-        fullName: otherParticipant.fullName,
-        profilePic: otherParticipant.profilePic,
-      };
-    });
+        // If no other participant found, skip this conversation
+        if (!otherParticipant) {
+          console.warn(
+            `No other participant found for conversation ${conversation._id}`
+          );
+          return null;
+        }
+
+        // Create the transformed conversation object
+        const transformedConversation = {
+          _id: conversation._id,
+          participants: conversation.participants.map((p) => ({
+            _id: p._id,
+            username: p.username,
+            fullName: p.fullName,
+            profilePic: p.profilePic,
+          })),
+          lastMessage:
+            conversation.messages[conversation.messages.length - 1] || null,
+          createdAt: conversation.createdAt,
+          updatedAt: conversation.updatedAt,
+          username: otherParticipant.username,
+          fullName: otherParticipant.fullName,
+          profilePic: otherParticipant.profilePic,
+        };
+
+        return transformedConversation;
+      })
+      .filter(Boolean); // Remove any null entries
 
     res.status(200).json(transformedConversations);
   } catch (error) {
