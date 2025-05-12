@@ -5,9 +5,22 @@ import Conversation from "./Conversation";
 const Conversations = ({ searchTerm }) => {
   const { loading, conversations } = useGetConversations();
 
-  const filteredConversations = conversations.filter((conversation) =>
-    conversation.username.toLowerCase().includes(searchTerm)
-  );
+  const filteredConversations = conversations.filter((conversation) => {
+    if (!searchTerm) return true;
+    
+    const searchTermLower = searchTerm.toLowerCase();
+    const username = conversation.username?.toLowerCase() || '';
+    const fullName = conversation.fullName?.toLowerCase() || '';
+    
+    // Fuzzy search implementation
+    return username.includes(searchTermLower) || 
+           fullName.includes(searchTermLower) ||
+           // Check if search term is a substring of username or fullName
+           username.split('').some((char, i) => {
+             const remaining = username.slice(i);
+             return remaining.startsWith(searchTermLower);
+           });
+  });
 
   return (
     <div className="py-2 flex flex-col overflow-auto">
