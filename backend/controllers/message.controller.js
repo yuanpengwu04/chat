@@ -6,18 +6,20 @@ import { getReceiverSocketId, io } from "../socket/socket.js";
 export const sendMessage = async (req, res) => {
   try {
     const { message } = req.body;
-    const { id: receiverId } = req.params;
+    const { id: conversationId } = req.params;
     const senderId = req.user._id;
 
-    let conversation = await Conversation.findOne({
-      participants: { $all: [senderId, receiverId] },
-    });
+    // Find conversation by ID
+    let conversation = await Conversation.findById(conversationId);
 
     if (!conversation) {
-      conversation = await Conversation.create({
-        participants: [senderId, receiverId],
-      });
+      return res.status(404).json({ error: "Conversation not found" });
     }
+
+    // Get the receiver ID (the other participant)
+    const receiverId = conversation.participants.find(
+      (participantId) => participantId.toString() !== senderId.toString()
+    );
 
     const newMessage = new Message({
       senderId,
@@ -25,44 +27,48 @@ export const sendMessage = async (req, res) => {
       message,
     });
 
-    console.log(newMessage);
     if (newMessage) {
       conversation.messages.push(newMessage._id);
     }
 
     await Promise.all([conversation.save(), newMessage.save()]);
 
+    // Send socket event to receiver
     const receiverSocketId = getReceiverSocketId(receiverId);
-    console.log(receiverSocketId);
     if (receiverSocketId) {
       io.to(receiverSocketId).emit("newMessage", newMessage);
     }
 
     res.status(201).json(newMessage);
   } catch (error) {
-    console.log("Error in sendMessage controller.", error.message);
+    console.log("Error in sendMessage controller:", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 export const getMessages = async (req, res) => {
   try {
-    const { id: userToChatWithId } = req.params;
-    const senderId = req.user._id;
+    const { id: conversationId } = req.params;
 
-    const conversation = await Conversation.findOne({
-      participants: { $all: [senderId, userToChatWithId] },
-    }).populate("messages");
+    const conversation = await Conversation.findById(conversationId).populate(
+      "messages"
+    );
 
-    console.log(conversation);
+    if (!conversation) {
+      return res.status(404).json({ error: "Conversation not found" });
+    }
 
-    if (!conversation) return res.status(200).json([]);
+    // Verify that the requesting user is a participant
+    if (!conversation.participants.includes(req.user._id)) {
+      return res
+        .status(403)
+        .json({ error: "Not authorized to view these messages" });
+    }
 
     const messages = conversation.messages;
-
     res.status(200).json(messages);
   } catch (error) {
-    console.log("Error in sendMessage controller.", error.message);
+    console.log("Error in getMessages controller:", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
