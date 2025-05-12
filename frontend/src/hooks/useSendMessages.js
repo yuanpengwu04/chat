@@ -9,11 +9,11 @@ const useSendMessages = () => {
   const sendMessage = async (message) => {
     setLoading(true);
     try {
+
       if (!selectedConversation?._id) {
         throw new Error("No conversation selected");
       }
-
-      const res = await fetch(
+       const res = await fetch(
         `/api/messages/send/${selectedConversation._id}`,
         {
           method: "POST",
@@ -21,6 +21,8 @@ const useSendMessages = () => {
           body: JSON.stringify({ message }),
         }
       );
+
+     
 
       const data = await res.json();
       if (data.error) {
