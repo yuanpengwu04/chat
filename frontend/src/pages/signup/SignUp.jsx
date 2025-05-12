@@ -1,6 +1,6 @@
 import GenderCheckbox from "./GenderCheckbox";
 import FormInput from "../../components/form/FormInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useSignup from "../../hooks/useSignup";
 
@@ -15,6 +15,7 @@ const SignUp = () => {
   });
 
   const { loading, signup } = useSignup();
+  const navigate = useNavigate();
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -106,17 +107,23 @@ const SignUp = () => {
                 <p className="fieldset fieldset-label">Required</p>
               </div>
             </div>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center gap-4">
               <button
                 disabled={loading}
                 className="btn btn-block btn-sm mt-2 border border-slate-700 w-1/4 bg-[#7676ce] hover:bg-[#8686de] text-white"
               >
                 {loading ? (
-                  <span class="loading loading-dots loading-sm"></span>
+                  <span className="loading loading-dots loading-sm"></span>
                 ) : (
                   "Sign Up"
                 )}
               </button>
+              <Link
+            to="/license"
+            className="text-sm text-gray-300 text-center justify-center items-center hover:underline hover:text-indigo-300 mt-2 inline-block"
+          >
+            {"Generate License"}
+          </Link>
             </div>
             <div className="flex items-center justify-center">
               <Link

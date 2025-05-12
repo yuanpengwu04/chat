@@ -1,8 +1,8 @@
-import { useState } from "react";
 import Login from "./pages/login/Login";
 import Home from "./pages/home/Home";
 import SignUp from "./pages/signup/SignUp";
 import Settings from "./pages/settings/Settings";
+import License from "./pages/license/LicenseKey";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAuthContext } from "./context/AuthContext";
@@ -22,6 +22,7 @@ function App() {
           element={authUser ? <Navigate to="/" /> : <SignUp />}
         />
         <Route path="/settings" element={authUser ? <Settings /> : <Login />} />
+        <Route path="/license" element={authUser ? <Navigate to="/" /> : <License />} />
       </Routes>
       <Toaster />
     </div>
