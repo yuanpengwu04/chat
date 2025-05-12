@@ -6,19 +6,31 @@ import useConversation from "../../store/useConversation";
 const Message = ({ message }) => {
   const { authUser } = useAuthContext();
   const { selectedConversation } = useConversation();
+  
+  // Check if current user is the sender
   const isSender = authUser._id === message.senderId;
+  
+  // Get the correct profile picture based on sender/receiver
+  const profilePic = isSender ? authUser.profilePic : selectedConversation.profilePic;
+  
+  // Get the correct name based on sender/receiver
+  const displayName = isSender ? authUser.username : selectedConversation.username;
 
   return (
-    <div className={`chat ${isSender ? "chat-end" : "chat-start"}`}>
+    <div 
+      className={`chat ${isSender ? "chat-end" : "chat-start"} w-full`}
+      key={message._id}
+    >
       <div className="chat-image avatar">
         <div className="w-10 rounded-full">
           <img
-            alt="Tailwind CSS chat bubble component"
-            src={`${
-              isSender ? authUser.profilePic : selectedConversation.profilePic
-            }`}
+            alt={`${displayName}'s avatar`}
+            src={profilePic || "/default-avatar.png"}
           />
         </div>
+      </div>
+      <div className="chat-header">
+        {displayName}
       </div>
       <div
         className={`chat-bubble ${
@@ -39,4 +51,5 @@ const Message = ({ message }) => {
     </div>
   );
 };
+
 export default Message;
