@@ -41,7 +41,7 @@ const Settings = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     await updateAccount(inputs);
-    console.log("Update account requested:", inputs);
+    //console.log("Update account requested:", inputs);
     toast.success("Your account has been updated.");
   };
 
@@ -133,7 +133,7 @@ const Settings = () => {
               className="btn btn-primary w-1/2 bg-[#7676ce] hover:bg-[#8686de]"
             >
               {loading ? (
-                <span class="loading loading-dots loading-sm"></span>
+                <span className="loading loading-dots loading-sm"></span>
               ) : (
                 "Update Account"
               )}
@@ -146,7 +146,7 @@ const Settings = () => {
               className="btn btn-error w-1/2 mt-4 bg-red-500 hover:bg-red-600"
             >
               {deleteLoading ? (
-                <span class="loading loading-dots loading-sm"></span>
+                <span className="loading loading-dots loading-sm"></span>
               ) : (
                 "Delete Account"
               )}
