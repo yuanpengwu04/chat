@@ -15,7 +15,7 @@ const Settings = () => {
     password: "",
     confirmPassword: "",
     gender: "",
-    profilePic: null,
+    profilePic: "",
   });
 
   const { loading, updateAccount } = useUpdateAccount();
@@ -34,13 +34,12 @@ const Settings = () => {
     });
   }
 
-  const handleFileChange = (event) => {
-    setInputs({ ...prev, profilePic: event.target.files[0] });
-  };
+  //const handleFileChange = (event) => {
+  //  setInputs({ ...prev, profilePic: event.target.files[0] });
+  //};
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Replace with proper backend code!!
     await updateAccount(inputs);
     console.log("Update account requested:", inputs);
     toast.success("Your account has been updated.");
@@ -52,9 +51,8 @@ const Settings = () => {
         "Are you sure you want to delete your account? This cannot be undone."
       )
     ) {
-      // Replace with proper backend code!!
       await deleteAccount();
-      console.log("Account deleted");
+      //console.log("Account deleted");
     }
   };
 
@@ -117,12 +115,14 @@ const Settings = () => {
             <p className="fieldset fieldset-label">Optional</p>
           </div>
 
-          <div className="mb-4">
-            <label className="fieldset fieldset-legend">Profile Picture</label>
-            <input
-              type="file"
-              onChange={handleFileChange}
-              className="file-input file-input-bordered w-full file:bg-[#9696ee] file:text-white bg-white text-gray-900"
+          <div className="flex items-center justify-center w-full">
+            <FormInput
+              field={`Profile Picture URL`}
+              placeholder={`Direct link to profile picture`}
+              optionalOrRequired={`Optional`}
+              name="profilePic"
+              value={inputs.profilePic}
+              onChange={handleChange}
             />
           </div>
 
