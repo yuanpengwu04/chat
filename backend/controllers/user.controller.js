@@ -18,7 +18,7 @@ export const getUserForSidebar = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
-    const { fullName, username, password, confirmPassword, gender } = req.body;
+    const { fullName, username, password, confirmPassword, gender, profilePic } = req.body;
     const user = await User.findById(req.user._id);
     if (!user) {
       res.status(400).json({ error: "User not found." });
@@ -37,6 +37,7 @@ export const update = async (req, res) => {
       user.password = hashedPassword;
     }
     if (gender) user.gender = gender;
+	if (profilePic) user.profilePic = profilePic;
     await user.save();
     res.status(201).json({
       _id: user._id,
