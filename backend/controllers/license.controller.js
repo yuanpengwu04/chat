@@ -23,7 +23,7 @@ export const licenseKeyGenerate = async (req, res) => {
       expiresAt,
     });
 
-    await license.save();
+    await license.save(); console.log(license);
 
     res.status(201).json({
       success: true,
@@ -39,6 +39,7 @@ export const licenseKeyGenerate = async (req, res) => {
       message: "License generation failed",
       error: error.message,
     });
+	console.log(error.message);
   }
 };
 
