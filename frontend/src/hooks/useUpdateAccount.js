@@ -12,6 +12,7 @@ const useUpdateAccount = () => {
     password,
     confirmPassword,
     gender,
+	profilePic,
   }) => {
     const success = handleInputError({
       fullName,
@@ -19,6 +20,7 @@ const useUpdateAccount = () => {
       password,
       confirmPassword,
       gender,
+	  profilePic,
     });
     if (!success) return;
 
@@ -35,11 +37,12 @@ const useUpdateAccount = () => {
           password,
           confirmPassword,
           gender,
+		  profilePic,
         }),
       });
 
       const data = await res.json();
-      console.log(data);
+      //console.log(data);
 
       if (data.error) {
         throw new Error(data.error);
@@ -64,6 +67,7 @@ const handleInputError = ({
   password,
   confirmPassword,
   gender,
+  profilePic,
 }) => {
   if (fullName && username && password && confirmPassword && gender) {
     toast.error("No fields are filled");
