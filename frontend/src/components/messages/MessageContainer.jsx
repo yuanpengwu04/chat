@@ -16,7 +16,7 @@ const MessageContainer = () => {
         <>
           {/* Header */}
           <div className="bg-[#efebf9] opacity-75 px-4 py-2 mb-2">
-            <span className="label-text">Chatting with:</span>{" "}
+            <span className="label-text text-black">Chatting with:</span>{" "}
             <span className="text-gray-900 text-l font-bold px-2">
               {selectedConversation.username}
             </span>
