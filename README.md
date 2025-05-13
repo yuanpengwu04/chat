@@ -12,7 +12,7 @@ To run the frontend:
 2. Run `npm run dev` to start the frontend locally at `localhost:3000`.
 3. Access `localhost:3000` on a web browser.
 
-In this version, due to the lack of availability of a web server, both the server-side(backend) and client-side(frontend) code have to be run locally. Please do not change the port number of the server.
+If deployed locally, both the server-side(backend) and client-side(frontend) code have to be run on the same localhost, with the server on port 5000. Please do not change the port number of the server.
 
 However, the database (MongoDB) is hosted online. You can change which database to connect to by modifying `MONGO_DB_URI` in the `.env` file located at the root directory.
 

@@ -8,7 +8,7 @@ To run the frontend in a local testing environment:
 2. Run `npm run dev`.
 3. Access `localhost:3000` on a web browser.
 
-In this version, due to the lack of availability of a web server, the server-side(backend) code has to be run locally at `localhost:5000`. Please do not modify the port number of the server.
+If deployed locally, the server-side(backend) code has to be run at `localhost:5000`. Please do not modify the port number of the server.
 
 Currently, there are 5 pages:
 - `/`: Home page, main chatting page
