@@ -53,6 +53,10 @@ export const getMessages = async (req, res) => {
       participants: { $all: [senderId, userToChatWithId] },
     }).populate("messages");
 
+    if (!conversation) {
+      res.status(200).json([]);
+    }
+
     // Verify that the requesting user is a participant
     if (!conversation.participants.includes(req.user._id)) {
       return res
