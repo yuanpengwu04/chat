@@ -18,7 +18,7 @@ const useLogout = () => {
         throw new Error(data.error);
       }
 
-      console.log(data);
+      //console.log(data);
       localStorage.removeItem("userInfo");
       setAuthUser(null);
     } catch (error) {
