@@ -62,7 +62,7 @@ const LicenseKey = () => {
       if (data.success) {
         setGeneratedLicense(data.license);
         toast.success("License key generated successfully!");
-		console.log(data.license);
+		//console.log(data.license);
       } else {
         throw new Error(data.message || "Failed to generate license key");
       }
