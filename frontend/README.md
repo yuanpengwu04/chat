@@ -1,12 +1,21 @@
-# React + Vite
+# Mirth Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The frontend code of Mirth, a web-based real-time one-to-one chat app.
 
-Currently, two official plugins are available:
+To run the frontend in a local testing environment:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Run `npm i` in this directory (not just at the root directory!) to install the dependencies.
+2. Run `npm run dev`.
+3. Access `localhost:3000` on a web browser.
 
-## Expanding the ESLint configuration
+In this version, due to the lack of availability of a web server, the server-side(backend) code has to be run locally at `localhost:5000`. Please do not modify the port number of the server.
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Currently, there are 5 pages:
+- `/`: Home page, main chatting page
+- `/settings`: Account settings page
+- `/login`: Login page
+- `/signup`: Registration page
+- `/license`: License key generation
+
+You can navigate between `/` and `/settings` via the button in the navigation bar at the top. Logging out takes the user back to `/login`.
+You can navigate between the `/login`, `/signup` and `/license` with the clickable texts (`Don't have an account?`, `Already have an account?`, `Generate License`, `Return to Signup`) on the pages.
