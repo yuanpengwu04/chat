@@ -23,7 +23,7 @@ export const licenseKeyGenerate = async (req, res) => {
       expiresAt,
     });
 
-    await license.save(); console.log(license);
+    await license.save(); //console.log(license);
 
     res.status(201).json({
       success: true,
