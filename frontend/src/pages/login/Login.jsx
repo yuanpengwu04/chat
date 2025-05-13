@@ -53,7 +53,7 @@ const Login = () => {
 		  <div className="flex items-center justify-center">
             <button disabled={loading} className="btn btn-block btn-sm mt-2 w-1/6 bg-[#7676ce] hover:bg-[#8686de] text-white">
               {loading ? (
-                <span class="loading loading-dots loading-sm"></span>
+                <span className="loading loading-dots loading-sm"></span>
               ) : (
                 "Login"
               )}
