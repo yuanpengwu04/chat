@@ -6,7 +6,7 @@ import { useAuthContext } from "../../context/AuthContext";
 import toast from "react-hot-toast";
 
 const SearchInput = () => {
-  const [input, setInput] = useState(null);
+  const [input, setInput] = useState("");
   const { searchUsers, searchResults, loading } = useSearchUsers();
   const { setSelectedConversation } = useConversation();
   const { authUser } = useAuthContext();
@@ -36,27 +36,20 @@ const SearchInput = () => {
 
   const handleUserClick = async (user) => {
     try {
-      // If conversation already exists, use that ID
-      const conversationId = user.conversationId;
-      
       // Create a conversation object
       const conversation = {
-        _id: conversationId || user._id, // Use existing conversation ID or user ID
+        _id: user._id, // Use existing conversation ID or user ID
         username: user.username,
         fullName: user.fullName,
         profilePic: user.profilePic,
-        participants: [authUser._id, user._id]
+        participants: [authUser._id, user._id],
       };
-      
 
-      
-      
-      
       // Set the selected conversation
       setSelectedConversation(conversation);
-      
+
       // Clear search results and input
-      setInput(null);
+      setInput("");
     } catch (error) {
       console.error("Error selecting user:", error);
       toast.error(error.message || "Failed to start conversation");
@@ -73,17 +66,17 @@ const SearchInput = () => {
           value={input}
           onChange={handleChange}
         />
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           className="btn btn-circle bg-sky-500 text-white"
           disabled={loading}
         >
           <IoSearchSharp className="w-6 h-6 outline-none" />
         </button>
       </form>
-      
+
       {/* Display search results */}
-      {!!input &&searchResults.length > 0 && (
+      {!!input && searchResults.length > 0 && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-lg max-h-60 overflow-y-auto z-50">
           {searchResults.map((user) => (
             <div
@@ -96,7 +89,10 @@ const SearchInput = () => {
             >
               <div className="avatar">
                 <div className="w-10 rounded-full">
-                  <img src={user.profilePic || "/default-avatar.png"} alt={user.username} />
+                  <img
+                    src={user.profilePic || "/default-avatar.png"}
+                    alt={user.username}
+                  />
                 </div>
               </div>
               <div>

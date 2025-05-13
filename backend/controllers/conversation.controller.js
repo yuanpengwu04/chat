@@ -31,7 +31,7 @@ export const getConversationsByUserId = async (req, res) => {
 
         // Create the transformed conversation object
         const transformedConversation = {
-          _id: conversation._id,
+          _id: otherParticipant._id,
           participants: conversation.participants.map((p) => ({
             _id: p._id,
             username: p.username,

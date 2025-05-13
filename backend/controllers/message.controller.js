@@ -6,20 +6,18 @@ import { getReceiverSocketId, io } from "../socket/socket.js";
 export const sendMessage = async (req, res) => {
   try {
     const { message } = req.body;
-    const { id: conversationId } = req.params;
+    const { id: receiverId } = req.params;
     const senderId = req.user._id;
 
-    // Find conversation by ID
-    let conversation = await Conversation.findById(conversationId);
+    let conversation = await Conversation.findOne({
+      participants: { $all: [senderId, receiverId] },
+    });
 
     if (!conversation) {
-      return res.status(404).json({ error: "Conversation not found" });
+      conversation = await Conversation.create({
+        participants: [senderId, receiverId],
+      });
     }
-
-    // Get the receiver ID (the other participant)
-    const receiverId = conversation.participants.find(
-      (participantId) => participantId.toString() !== senderId.toString()
-    );
 
     const newMessage = new Message({
       senderId,
@@ -55,7 +53,7 @@ export const getMessages = async (req, res) => {
     );
 
     if (!conversation) {
-      return res.status(404).json({ error: "Conversation not found" });
+      return res.status(200).json(null);
     }
 
     // Verify that the requesting user is a participant
